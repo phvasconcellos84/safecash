@@ -85,7 +85,7 @@ const LoginScreen = () => {
 				<AuthInput
 					placeholder="E-mail"
 					value={email}
-					onChangeText={value => setEmail(value)}
+					onChangeText={value => setEmail(value.toLowerCase())}
 					keyboardType="email-address"
 				/>
 				<AuthInput
