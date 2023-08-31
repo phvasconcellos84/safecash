@@ -3,6 +3,9 @@ import { Platform } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import AppNavigation from './navigation';
 import { hideNavigationBar } from 'react-native-navigation-bar-color';
+import { store } from './store';
+import { Provider } from 'react-redux';
+import { MessageBox } from './components/MessageBox';
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -12,9 +15,10 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <>
+    <Provider store={store}>
       <AppNavigation />
-    </>
+      <MessageBox />
+    </Provider>
   );
 }
 

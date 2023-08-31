@@ -1,54 +1,34 @@
-import React, { useState } from "react";
-import { 
-    View,
-    Image,
-    StyleSheet
-} from "react-native";
+import React from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {enumScreens} from '../../helpers/enum';
+import Preload from '../pages/PreLoad';
+import Auth from '../pages/Auth';
+import MainDrawer from './drawer.routes';
 
-import AuthRoutes from "./auth.routes";
-import AppRoutes from "./app.routes";
-import { Loading } from "../../components/Loading";
+const Stack = createNativeStackNavigator();
+
+const config = {
+    options: {
+        headerShown: false,
+    },
+};
 
 const Routes = () => {
-    const [isAuthenticated, setIsAuthenticaded] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-
-    if (isLoading) {
-        return (
-            <View
-                style={styles.container}
-            >
-                <View style={styles.imageView}>
-                    <Image
-                        style={styles.logo}
-                        source={require('../../assets/images/LogoFull.png')}
-                        resizeMode='contain' />
-                </View>
-                <Loading />
-            </View>
-        );
-    }
-
     return (
-        isAuthenticated ? <AppRoutes /> : <AuthRoutes />
+        <Stack.Navigator>
+            <Stack.Screen
+                name={enumScreens.preload.name}
+                component={Preload}
+                {...config}
+            />
+            <Stack.Screen
+                name={enumScreens.auth.name}
+                component={Auth}
+                {...config}
+            />
+            <Stack.Screen name="main" component={MainDrawer} {...config} />
+        </Stack.Navigator>
     );
-}
+};
 
 export default Routes;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#000'
-    },
-    logo: {
-        width: '100%',
-        height: 100,
-    },
-    imageView: {
-        width: '100%',
-        padding: 10,
-    },
-});
